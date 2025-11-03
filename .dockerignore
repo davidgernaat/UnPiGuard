@@ -1,0 +1,45 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# GitHub
+.github
+
+# SVN
+.svn
+
+# Documentation
+README.md
+*.md
+LICENSE
+
+# Docker
+docker-compose.yml
+.dockerignore
+
+# Config and data directories (these should be mounted as volumes)
+config/
+data/
+
+# IDE and editor files
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+
+# CI/CD
+.travis.yml
+.gitlab-ci.yml
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
