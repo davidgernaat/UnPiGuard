@@ -69,6 +69,7 @@ jobs:
             type=sha,prefix={{branch}}-
 
       - name: Build and push Docker image
+        id: build-push
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -80,10 +81,10 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Generate artifact attestation for GHCR
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && steps.build-push.outputs.digest != ''
         uses: actions/attest-build-provenance@v1
         with:
           subject-name: ${{ env.GHCR_IMAGE }}
-          subject-digest: ${{ steps.meta.outputs.digest }}
+          subject-digest: ${{ steps.build-push.outputs.digest }}
           push-to-registry: true
 

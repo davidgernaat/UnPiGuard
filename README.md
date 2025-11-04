@@ -1,20 +1,20 @@
 # UnPiGuard = Wireguard + Pi-hole + Unbound + Docker
 
-A free and open-source network-wide pi-hole add-blocker with integrated Unbound recursive DNS resolution in a single Docker container that can be used as a VPN or in your home network.
+A free and open-source ad-blocker with integrated recursive DNS resolution in a single Docker container that can be used as a VPN or in your home network.
 
 A normal website-visit exposes that which you read and see to your:
 - ✅ **Internet Service Provider (ISP)**: the people giving you internet
 - ✅ **DNS provider**: the people giving you the ip-address related to the www.websitename.com
 - ✅ **website-owner**: the people hosting the website you visit
 - ✅ **third-party advertisers**: the people trying to sell you something while visiting the website
-- ❌ **VPS provider**: the company to have your VPN hosted on. Choose wisely: https://www.privacytools.io/private-hosting
+- ❌ **VPS provider**: the company to have your VPN hosted on.
 
 With UnPiGuard you reduce this to:
 - ❌ **Internet Service Provider (ISP)**: the people giving you internet
 - ❌ **DNS provider**: the people giving you the ip-address related to the www.websitename.com
 - ❌ **website-owner**: the people hosting the website you visit
 - ❌ **third-party advertisers**: the people trying to sell you something while visiting the website
-- ✅ **VPS provider**: the company to have your VPN hosted on, so choose wisely: https://www.privacytools.io/private-hosting
+- ✅ **VPS provider**: the company to have your VPN hosted on.  Choose wisely: https://www.privacytools.io/private-hosting
 
 It spins up creating an Wireguard-peer that is pointed towards the integrated pi-hole add-blocker that uses the integrated Unbound recursive DNS provider to resolve DNS requests: 
 
@@ -22,7 +22,7 @@ It spins up creating an Wireguard-peer that is pointed towards the integrated pi
 - **Pi-hole**: DNS-based ad blocking with web interface
 - **Unbound**: Recursive DNS resolver for privacy and security
 
-You can also use it for your home network: ignore Wireguard and omit opening ports, instead point your router to the local host-computer ip-address.
+You can also use it for your home network: just ignore Wireguard and omit opening ports, instead point your router' DNS to the local host-computer ip-address.
 
 ## Quick Start
 
@@ -32,13 +32,17 @@ On a VPS, or on a home computer:
 
 git clone https://github.com/davidgernaat/UnPiGuard
 
+docker pull ghcr.io/davidgernaat/unpiguard:latest
+
+docker pull davidgernaat/unpiguard:latest
+
 2) 🔧 Configure yaml-file
 
-Edit `docker-compose.yml`: install <YOUR_VPS_IP> and peer name.
+Edit `docker-compose.yml`: change <YOUR_VPS_IP> and peer name.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `PIHOLE_INTERFACE` | `wg0` | Network interface Pi-hole listens on. For Wirguard: wg0. For home-router: local|
+| `PIHOLE_INTERFACE` | `wg0` | Network interface Pi-hole listens on. For Wireguard: wg0. For home-router: local|
 | `WG_INTERFACE_NAME` | `wg0` | Interface Wireguard listens too |
 | `WG_SERVER_ADDRESS` | `10.66.66.1/24` | Wireguard server IP and subnet |
 | `WG_LISTEN_PORT` | `51820` | Wireguard listening port |
@@ -66,11 +70,15 @@ If you want to use it for your home router:
 4) 🚀 Build & run:
 
 ```
-cd UnPiGuard
+If using docker-image:
+docker compose up -d
+
+If building from source:
 docker compose up -d --build
+
 ```
 
-5) ℹ️ VPN peers
+5) :triangular_flag_on_post: VPN peers
 
 The first peer (peer1) is automatically created. Find the configuration at:
 
@@ -102,11 +110,11 @@ docker exec unpiguard wg show wg0
 
 To access Pi-hole Web Interface
 
-  From Wireguard clients: `http://10.66.66.1/admin`
-  Default password: None (set one in Pi-hole settings)
-  HaGeZi Ultimate Blocklist: block ~244,821 Domains, Ads, Affiliate, Tracking, Metrics, Telemetry, Phishing, Malware, Scam, Cryptojacking
+  - From Wireguard clients: `http://10.66.66.1/admin`
+  - Default password: None (set one in Pi-hole settings)
+  - HaGeZi Ultimate Blocklist: block ~244,821 Domains, Ads, Affiliate, Tracking, Metrics, Telemetry, Phishing, Malware, Scam, Cryptojacking
 
-6) Connect and verify
+6) i Connect and verify
 
 Scan the QR-code with you Wireguard app, or copy peer configuration to you computer. https://www.wireguard.com/quickstart/
 
@@ -157,4 +165,4 @@ This setup is provided as-is for educational and personal use.
 - [Wireguard](https://www.wireguard.com/)
 - [Pi-hole](https://pi-hole.net/)
 - [Unbound](https://nlnetlabs.nl/projects/unbound/)
-- [WireHole]https://github.com/IAmStoxe/wirehole/)
+- [WireHole](https://github.com/IAmStoxe/wirehole/)
