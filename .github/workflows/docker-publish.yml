@@ -80,11 +80,6 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Generate artifact attestation for GHCR
-        if: github.event_name != 'pull_request' && steps.build-push.outputs.digest != ''
-        uses: actions/attest-build-provenance@v1
-        with:
-          subject-name: ${{ env.GHCR_IMAGE }}
-          subject-digest: ${{ steps.build-push.outputs.digest }}
-          push-to-registry: true
+      - name: Image digest
+        run: echo "Image pushed with digest ${{ steps.build-push.outputs.digest }}"
 
